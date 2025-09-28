@@ -615,7 +615,7 @@ function createSiloCard(id, silo) {
         <div class="silo-box" id="${id}" 
              onclick="location.href='system.html?id=${id}'" 
              style="cursor: pointer; overflow: visible">
-            <img id="flag_${id}" src="resource/countrys/${country}.png" alt="Silo Flag" style="width:30%">
+            <img id="flag_${id}" src="resource/countrys/${country.toLowerCase()}.png" alt="Flag_${country}" style="width:30%">
             <div class="basic-info">
                 <h2 id="silo_${id}">${id}</h2>
                 <p><strong>Status:</strong> <span id="OperatingStatus_${id}">${status}</span></p>
@@ -659,7 +659,7 @@ function createMiniSiloCard(id, silo) {
     return `
     <div class="silo-boxes">
         <div class="silo-box" id='${id}'>
-            <img id="flag_${id}" src="resource/${country}.png" alt="Silo Flag" style="width:30%">
+            <img id="flag_${id}" src="resource/countrys/${country.toLowerCase()}.png" alt=Flag_${country}" style="width:30%">
             <div class="basic-info">
               <h2 id="silo_${id}">${id}</h2>
               <p><strong>Status:</strong> <span class="status" id="OperatingStatus_${id}">${status}</span></p>

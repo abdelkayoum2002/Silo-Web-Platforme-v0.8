@@ -329,7 +329,7 @@ app.get('/mqtt-credentials', authenticate, (req, res) => {
 
         const brokerUrl = isProd
           ? `wss://${req.get("host")}/mqtt`
-          : "ws://localhost:1884/mqtt";
+          : "ws://localhost:3000/mqtt";
 
         res.json({
           brokerUrl: brokerUrl,
