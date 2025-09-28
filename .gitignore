@@ -1,6 +1,6 @@
 # Ignore node_modules (Node.js projects)
 node_modules/
-
+package-lock.json
 # Ignore log files
 *.log
 
