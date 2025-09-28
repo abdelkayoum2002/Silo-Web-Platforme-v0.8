@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .users-container {
+            padding: 32px;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .user-card {
+            background: white;
+            border: 2px solid #f1f5f9;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .user-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 25px -8px rgba(102, 126, 234, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .user-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin-right: 16px;
+            border: 3px solid #f1f5f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .user-card:hover .profile-pic {
+            border-color: #667eea;
+        }
+
+        .user-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .user-role {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .status-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-btn.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .status-btn.inactive {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .status-btn.pending {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .status-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: scale(1.1);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 32px;
+            background: #f8fafc;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-active { background-color: #10b981; }
+        .status-inactive { background-color: #ef4444; }
+        .status-pending { background-color: #f59e0b; }
+
+        @media (max-width: 768px) {
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .users-container {
+                padding: 16px;
+            }
+            
+            .section-header {
+                padding: 16px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">User Management</h2>
+            <p class="section-subtitle">Manage team members and their permissions</p>
+        </div>
+        
+        <div class="users-container">
+            <div class="users-grid" id="usersGrid">
+                <!-- Users will be populated here -->
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="activeUsers">0</div>
+                <div class="stat-label">Active</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="inactiveUsers">0</div>
+                <div class="stat-label">Inactive</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="pendingUsers">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample user data
+        const users = [
+            {
+                id: 1,
+                fullName: "Sarah Johnson",
+                role: "Project Manager",
+                profilePic: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+                status: "active",
+                lastSeen: "2 hours ago"
+            },
+            {
+                id: 2,
+                fullName: "Michael Chen",
+                role: "Senior Developer",
+                profilePic: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+                status: "active",
+                lastSeen: "5 minutes ago"
+            },
+            {
+                id: 3,
+                fullName: "Emily Rodriguez",
+                role: "UX Designer",
+                profilePic: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+                status: "inactive",
+                lastSeen: "3 days ago"
+            },
+            {
+                id: 4,
+                fullName: "David Kim",
+                role: "Marketing Specialist",
+                profilePic: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+                status: "pending",
+                lastSeen: "Never"
+            },
+            {
+                id: 5,
+                fullName: "Lisa Thompson",
+                role: "Data Analyst",
+                profilePic: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+                status: "active",
+                lastSeen: "1 hour ago"
+            },
+            {
+                id: 6,
+                fullName: "James Wilson",
+                role: "DevOps Engineer",
+                profilePic: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+                status: "inactive",
+                lastSeen: "1 week ago"
+            }
+        ];
+
+        function createUserCard(user) {
+            return `
+                <div class="user-card">
+                    <div class="user-profile">
+                        <img src="${user.profilePic}" alt="${user.fullName}" class="profile-pic" loading="lazy">
+                        <div class="user-info">
+                            <h3>${user.fullName}</h3>
+                            <div class="user-role">${user.role}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-section">
+                        <button class="status-btn ${user.status}" onclick="toggleStatus(${user.id}, '${user.status}')">
+                            <span class="status-indicator status-${user.status}"></span>
+                            ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                        </button>
+                        
+                        <div class="user-actions">
+                            <button class="action-btn" onclick="editUser(${user.id})" title="Edit User">
+                                ✏️
+                            </button>
+                            <button class="action-btn" onclick="viewUser(${user.id})" title="View Details">
+                                👁️
+                            </button>
+                            <button class="action-btn" onclick="deleteUser(${user.id})" title="Delete User">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderUsers() {
+            const usersGrid = document.getElementById('usersGrid');
+            usersGrid.innerHTML = users.map(user => createUserCard(user)).join('');
+            updateStats();
+        }
+
+        function updateStats() {
+            const totalUsers = users.length;
+            const activeUsers = users.filter(u => u.status === 'active').length;
+            const inactiveUsers = users.filter(u => u.status === 'inactive').length;
+            const pendingUsers = users.filter(u => u.status === 'pending').length;
+
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('activeUsers').textContent = activeUsers;
+            document.getElementById('inactiveUsers').textContent = inactiveUsers;
+            document.getElementById('pendingUsers').textContent = pendingUsers;
+        }
+
+        function toggleStatus(userId, currentStatus) {
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                // Cycle through statuses: active -> inactive -> pending -> active
+                const statusCycle = {
+                    'active': 'inactive',
+                    'inactive': 'pending',
+                    'pending': 'active'
+                };
+                user.status = statusCycle[currentStatus];
+                renderUsers();
+            }
+        }
+
+        function editUser(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                alert(`Edit user: ${user.fullName}`);
+                // Here you would typically open a modal or navigate to an edit page
+            }
+        }
+
+        function viewUser(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                alert(`View details for: ${user.fullName}\nRole: ${user.role}\nStatus: ${user.status}`);
+                // Here you would typically show detailed user information
+            }
+        }
+
+        function deleteUser(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user && confirm(`Are you sure you want to delete ${user.fullName}?`)) {
+                const index = users.findIndex(u => u.id === userId);
+                users.splice(index, 1);
+                renderUsers();
+            }
+        }
+
+        // Initialize the interface
+        renderUsers();
+    </script>
+</body>
+</html>

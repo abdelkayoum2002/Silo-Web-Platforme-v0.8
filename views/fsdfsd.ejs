@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART SILO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100&icon_names=favorite,home,search,settings" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #374151;
+        }
+
+        .settings-container {
+            margin-top: 64px;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        .settings-header {
+            margin-bottom: 24px;
+        }
+
+        .settings-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .settings-header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .settings-tabs-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .settings-tabs {
+            display: flex;
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            margin-right: 4px;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: #dbeafe;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+        }
+
+        .tab-btn:not(.active):hover {
+            background-color: #f9fafb;
+            color: #374151;
+        }
+
+        .tab-content {
+            padding: 16px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 1024px) {
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+            .grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background-color: #f9fafb;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .table td {
+            font-size: 14px;
+        }
+
+        .table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-cancel {
+            background-color: #f9fafb;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-cancel:hover {
+            background-color: #f3f4f6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .icon-blue {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .icon-green {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+
+        .icon-red {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        .icon-yellow {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        .divider {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        .table-container {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="icon"><ion-icon name=""></ion-icon></span> 
+              <span class="title">Menu</span>
+            </a>
+          </li>
+
+                <li>
+                    <a href="/Dashboard">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/System">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">System</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/SCADA">
+                        <span class="icon">
+                        </span>
+                        <span class="title">SCADA</span>
+                    </a>
+                </li>
+                <li>
+                      <a href="/Analytics">
+                          <span class="icon">
+                              <ion-icon name="analytics-outline"></ion-icon>
+                          </span>
+                          <span class="title">Analytics</span>
+                      </a>
+                </li>
+                <li>
+                    <a href="/Messages">
+
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Messages</span>
+                    </a>
+                </li>
+
+                <li>
+             
+                <li>
+                    <a href="/Profile">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <span class="title">Profile</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/Settings">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/Password">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/index">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+      </div>
+      <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                  <div style="display: inline-flex;align-items: center;gap: 10px;">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline"></ion-icon>
+                    </div>
+                    <a class="emergencybtn" id="EmergencyStop"><img width="40" height="40" src="https://img.icons8.com/fluency/48/emergency-stop-button.png" alt="emergency-stop-button"/></a>
+                  </div>
+                  <div class="silo">
+                      <span class="title">SMART SILO</span>
+                  </div>
+                  <div style="display: inline-flex;align-items: center;gap: 10px;">
+                    <div class="mqtt_status">
+                        MQTT
+                    </div>
+
+                    <div class="user">
+                      <img src="assets/imgs/customer001.jpg" alt="">
+                    </div>
+                  </div>
+            </div>
+            <div class="settings-container">
+                <div class="settings-header">
+                    <h1>Settings</h1>
+                    <p>Configure your IIoT platform preferences and system settings</p>
+                </div>
+
+                <div class="settings-tabs-container">
+                    <div class="settings-tabs">
+                        <button class="tab-btn active" onclick="switchTab('profile')">
+                            <span>👤</span>
+                            My Profile
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('users')">
+                            <span>👥</span>
+                            Users
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('devices')">
+                            <span>🔧</span>
+                            Devices/Nodes
+                        </button>
+                        <button class="tab-btn" onclick="switchTab('system')">
+                            <span>⚙️</span>
+                            System Settings
+                        </button>
+                    </div>
+
+                    <!-- My Profile Tab -->
+                    <div id="profile" class="tab-content active">
+                        <section class="myprofile">
+                            <div class="profile">
+                                <div class="profilePic">
+                                    <div>
+                                        <img id="MyProfilePic" src="https://via.placeholder.com/120x120/3b82f6/ffffff?text=User" alt="Profile Picture">
+                                        <div class="profileStatus active">
+                                            <span id='MyProfile_status'>Active</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profileInfo">
+                                    <div class="name-role">
+                                        <span class="first-name" id='MyProfile_first_name'>Jean-Pierre</span>
+                                        <span class="last-name" id='MyProfile_last_name'>Dubois</span>
+                                        <span class="role" id='MyProfile_role'>Plant Engineer</span>
+                                    </div>
+                                    <hr class="separator">
+                                    <div class="detail">
+                                        <label>
+                                            <i class="fas fa-envelope"></i>
+                                            <strong>Email:</strong> <span id='MyProfile_email'>jean-pierre.dubois@grainco.dz</span>
+                                        </label>
+                                        <label>
+                                            <i class="fas fa-phone"></i>
+                                            <strong>Phone:</strong> <span id='MyProfile_phone_number'>+213 31 567 890</span>
+                                        </label>
+                                        <label>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <strong>Location:</strong> <span id='MyProfile_location'>Constantine, Algeria</span>
+                                        </label>
+                                        <label>
+                                            <i class="fas fa-user"></i>
+                                            <strong>Username:</strong> <span>••••••••••</span>
+                                        </label>
+                                        <label>
+                                            <i class="fas fa-calendar"></i>
+                                            <strong>Created Date:</strong> <span id='MyProfile_created_date'>January 2022</span>
+                                        </label>
+                                        <label>
+                                            <i class="fas fa-lock"></i>
+                                            <strong>Password:</strong> <span>••••••••••</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profileDev">
+                                <div class="device-header">
+                                    <div>
+                                        <h2><i class="fas fa-microchip"></i>Connected Devices</h2>
+                                        <div class="device-count"><span id="online-devices" data-online_count="12">12</span> Active</div>
+                                    </div>
+                                    <div>Total:<span id="total-devices" data-device_count="15">15</span></div>
+                                </div>
+                                <div class="devices-grid" id="devices-grid">
+                                    <!-- Sample device cards -->
+                                    <div class="device-card online">
+                                        <div class="device-status"></div>
+                                        <div class="device-info">
+                                            <h4>Temperature Sensor</h4>
+                                            <p>TEMP_001</p>
+                                            <small>Line A - Reactor 1</small>
+                                        </div>
+                                    </div>
+                                    <div class="device-card online">
+                                        <div class="device-status"></div>
+                                        <div class="device-info">
+                                            <h4>Pressure Monitor</h4>
+                                            <p>PRES_004</p>
+                                            <small>Boiler Room</small>
+                                        </div>
+                                    </div>
+                                    <div class="device-card offline">
+                                        <div class="device-status"></div>
+                                        <div class="device-info">
+                                            <h4>Flow Meter</h4>
+                                            <p>FLOW_012</p>
+                                            <small>Cooling System</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="divider">
+                            <h3 class="section-title">Profile Settings</h3>
+                            <div class="grid grid-cols-2">
+                                <div class="card">
+                                    <h4 style="font-weight: 600; margin-bottom: 16px;">Account Settings</h4>
+                                    <div class="form-group">
+                                        <label class="form-label">Change Password</label>
+                                        <button class="btn btn-primary" style="width: 100%;">Update Password</button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Profile Picture</label>
+                                        <button class="btn" style="width: 100%; background-color: #f3f4f6; color: #374151;">Upload New Picture</button>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Enable profile visibility to team</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Allow direct messages</span>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <h4 style="font-weight: 600; margin-bottom: 16px;">Dashboard Preferences</h4>
+                                    <div class="form-group">
+                                        <label class="form-label">Default Dashboard View</label>
+                                        <select class="form-select">
+                                            <option selected>Overview</option>
+                                            <option>Production Line A</option>
+                                            <option>Production Line B</option>
+                                            <option>Quality Metrics</option>
+                                            <option>Energy Management</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Data Refresh Rate</label>
+                                        <select class="form-select">
+                                            <option>Real-time (1 second)</option>
+                                            <option>Fast (5 seconds)</option>
+                                            <option selected>Normal (15 seconds)</option>
+                                            <option>Slow (30 seconds)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Theme</label>
+                                        <select class="form-select">
+                                            <option selected>Light</option>
+                                            <option>Dark</option>
+                                            <option>Auto (System)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div id="users" class="tab-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h3 class="section-title" style="margin-bottom: 0;">User Management</h3>
+                            <button class="btn btn-primary">
+                                <span>➕</span>
+                                Add User
+                            </button>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>John Smith</strong></td>
+                                        <td>john.smith@company.com</td>
+                                        <td>Admin</td>
+                                        <td>IT</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #dc2626;">🗑️</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sarah Johnson</strong></td>
+                                        <td>sarah.j@company.com</td>
+                                        <td>Engineer</td>
+                                        <td>Manufacturing</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #dc2626;">🗑️</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mike Wilson</strong></td>
+                                        <td>mike.w@company.com</td>
+                                        <td>Operator</td>
+                                        <td>Production</td>
+                                        <td><span class="status-badge status-inactive">Inactive</span></td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #dc2626;">🗑️</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Lisa Brown</strong></td>
+                                        <td>lisa.b@company.com</td>
+                                        <td>Analyst</td>
+                                        <td>Quality</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #dc2626;">🗑️</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>David Lee</strong></td>
+                                        <td>david.l@company.com</td>
+                                        <td>Technician</td>
+                                        <td>Maintenance</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #dc2626;">🗑️</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="grid grid-cols-2" style="margin-top: 32px;">
+                            <div class="card">
+                                <h4 style="font-weight: 600; margin-bottom: 16px;">Role Permissions</h4>
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #f9fafb; border-radius: 8px;">
+                                        <span style="font-weight: 500;">Admin</span>
+                                        <button class="btn" style="color: #2563eb; font-size: 14px;">Configure</button>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #f9fafb; border-radius: 8px;">
+                                        <span style="font-weight: 500;">Engineer</span>
+                                        <button class="btn" style="color: #2563eb; font-size: 14px;">Configure</button>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #f9fafb; border-radius: 8px;">
+                                        <span style="font-weight: 500;">Operator</span>
+                                        <button class="btn" style="color: #2563eb; font-size: 14px;">Configure</button>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: #f9fafb; border-radius: 8px;">
+                                        <span style="font-weight: 500;">Analyst</span>
+                                        <button class="btn" style="color: #2563eb; font-size: 14px;">Configure</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <h4 style="font-weight: 600; margin-bottom: 16px;">Access Control</h4>
+                                <div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Require 2FA for admin users</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Enable session timeout</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox">
+                                        <span>Restrict access by IP address</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox">
+                                        <span>Log all user activities</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Devices/Nodes Tab -->
+                    <div id="devices" class="tab-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h3 class="section-title" style="margin-bottom: 0;">Equipment & Device Management</h3>
+                            <div style="display: flex; gap: 12px;">
+                                <button class="btn btn-success">
+                                    <span>➕</span>
+                                    Add Equipment
+                                </button>
+                                <button class="btn btn-primary">
+                                    <span>🔍</span>
+                                    Scan Network
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon icon-blue">📊</div>
+                                    <div class="stat-number">127</div>
+                                </div>
+                                <div class="stat-label">Total Equipment</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon icon-green">📡</div>
+                                    <div class="stat-number">98</div>
+                                </div>
+                                <div class="stat-label">Active Nodes</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon icon-red">⚠️</div>
+                                    <div class="stat-number">15</div>
+                                </div>
+                                <div class="stat-label">Offline Devices</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-header">
+                                    <div class="stat-icon icon-yellow">🔧</div>
+                                    <div class="stat-number">8</div>
+                                </div>
+                                <div class="stat-label">Maintenance Due</div>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h4 style="font-weight: 500;">Equipment List</h4>
+                                <div class="table-filters">
+                                    <select class="filter-select">
+                                        <option>All Equipment</option>
+                                        <option>Temperature Sensors</option>
+                                        <option>Pressure Transmitters</option>
+                                        <option>Flow Meters</option>
+                                        <option>Level Sensors</option>
+                                    </select>
+                                    <select class="filter-select">
+                                        <option>All Status</option>
+                                        <option>Online</option>
+                                        <option>Offline</option>
+                                        <option>Maintenance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Equipment ID</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Location</th>
+                                        <th>Protocol</th>
+                                        <th>Status</th>
+                                        <th>Last Seen</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>TEMP_001</code></td>
+                                        <td><strong>Reactor Temperature</strong></td>
+                                        <td>Temperature Sensor</td>
+                                        <td>Line A - R1</td>
+                                        <td>Modbus TCP</td>
+                                        <td><span class="status-badge status-active">Online</span></td>
+                                        <td>2 min ago</td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #16a34a;">🔌</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>PRES_004</code></td>
+                                        <td><strong>Steam Pressure</strong></td>
+                                        <td>Pressure Transmitter</td>
+                                        <td>Boiler Room</td>
+                                        <td>HART</td>
+                                        <td><span class="status-badge status-active">Online</span></td>
+                                        <td>1 min ago</td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #16a34a;">🔌</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>FLOW_012</code></td>
+                                        <td><strong>Cooling Water Flow</strong></td>
+                                        <td>Flow Meter</td>
+                                        <td>Cooling Tower</td>
+                                        <td>OPC UA</td>
+                                        <td><span class="status-badge status-inactive">Offline</span></td>
+                                        <td>45 min ago</td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #16a34a;">🔌</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>LVL_008</code></td>
+                                        <td><strong>Tank Level Sensor</strong></td>
+                                        <td>Level Sensor</td>
+                                        <td>Storage Tank 3</td>
+                                        <td>Modbus RTU</td>
+                                        <td><span class="status-badge status-active">Online</span></td>
+                                        <td>30 sec ago</td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #16a34a;">🔌</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>VIB_015</code></td>
+                                        <td><strong>Pump Vibration</strong></td>
+                                        <td>Vibration Monitor</td>
+                                        <td>Pump Station 2</td>
+                                        <td>Ethernet/IP</td>
+                                        <td><span class="status-badge status-warning">Maintenance</span></td>
+                                        <td>2 hours ago</td>
+                                        <td>
+                                            <button class="btn" style="padding: 4px 8px;">✏️</button>
+                                            <button class="btn" style="padding: 4px 8px; color: #16a34a;">🔌</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- System Settings Tab -->
+                    <div id="system" class="tab-content">
+                        <h3 class="section-title">System Configuration</h3>
+                        
+                        <div class="grid grid-cols-2">
+                            <div class="card">
+                                <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                    <span>⚙️</span>
+                                    General Settings
+                                </h4>
+                                <div class="form-group">
+                                    <label class="form-label">System Name</label>
+                                    <input type="text" class="form-input" value="IIoT Production System">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Data Retention Period (days)</label>
+                                    <input type="number" class="form-input" value="365">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Log Level</label>
+                                    <select class="form-select">
+                                        <option>Error</option>
+                                        <option>Warning</option>
+                                        <option selected>Info</option>
+                                        <option>Debug</option>
+                                    </select>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" checked>
+                                    <span>Enable system health monitoring</span>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                    <span>💾</span>
+                                    Database Configuration
+                                </h4>
+                                <div class="form-group">
+                                    <label class="form-label">Database Host</label>
+                                    <input type="text" class="form-input" value="localhost:5432">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Backup Frequency</label>
+                                    <select class="form-select">
+                                        <option>Hourly</option>
+                                        <option selected>Daily</option>
+                                        <option>Weekly</option>
+                                        <option>Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Connection Pool Size</label>
+                                    <input type="number" class="form-input" value="20">
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" checked>
+                                    <span>Enable automatic backups</span>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                    <span>🔒</span>
+                                    Security Settings
+                                </h4>
+                                <div class="form-group">
+                                    <label class="form-label">Session Timeout (minutes)</label>
+                                    <input type="number" class="form-input" value="30">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Password Expiry (days)</label>
+                                    <input type="number" class="form-input" value="90">
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" checked>
+                                    <span>Force HTTPS connections</span>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" checked>
+                                    <span>Enable audit logging</span>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox">
+                                    <span>IP whitelist enforcement</span>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                    <span>🔔</span>
+                                    Alert Configuration
+                                </h4>
+                                <div class="form-group">
+                                    <label class="form-label">Alert Escalation Time (minutes)</label>
+                                    <input type="number" class="form-input" value="15">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Server (SMTP)</label>
+                                    <input type="text" class="form-input" value="smtp.company.com">
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" checked>
+                                    <span>Send critical alerts via SMS</span>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" checked>
+                                    <span>Enable email notifications</span>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox">
+                                    <span>Webhook notifications</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top: 24px;">
+                            <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                <span>⏰</span>
+                                System Task Scheduler
+                            </h4>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-label">System Backup Schedule</label>
+                                        <select class="form-select">
+                                            <option selected>Daily at 2:00 AM</option>
+                                            <option>Every 6 hours</option>
+                                            <option>Every 12 hours</option>
+                                            <option>Weekly</option>
+                                            <option>Custom</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Data Cleanup Schedule</label>
+                                        <select class="form-select">
+                                            <option>Daily</option>
+                                            <option selected>Weekly</option>
+                                            <option>Monthly</option>
+                                            <option>Disabled</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">System Health Check</label>
+                                        <select class="form-select">
+                                            <option>Every 5 minutes</option>
+                                            <option selected>Every 15 minutes</option>
+                                            <option>Every 30 minutes</option>
+                                            <option>Hourly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-label">Log Rotation Schedule</label>
+                                        <select class="form-select">
+                                            <option selected>Daily</option>
+                                            <option>Weekly</option>
+                                            <option>When size exceeds 100MB</option>
+                                            <option>Monthly</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Report Generation</label>
+                                        <select class="form-select">
+                                            <option selected>Daily at 6:00 AM</option>
+                                            <option>Weekly on Monday</option>
+                                            <option>Monthly</option>
+                                            <option>On demand only</option>
+                                        </select>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Enable automatic maintenance mode</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Send task completion notifications</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top: 24px;">
+                            <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                <span>📊</span>
+                                Performance & Monitoring
+                            </h4>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-label">CPU Usage Alert Threshold (%)</label>
+                                        <input type="number" class="form-input" value="85" min="0" max="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Memory Usage Alert Threshold (%)</label>
+                                        <input type="number" class="form-input" value="90" min="0" max="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Disk Space Alert Threshold (%)</label>
+                                        <input type="number" class="form-input" value="80" min="0" max="100">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-label">Network Latency Alert (ms)</label>
+                                        <input type="number" class="form-input" value="500">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Device Timeout Alert (seconds)</label>
+                                        <input type="number" class="form-input" value="30">
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Monitor system temperature</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Track device response times</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top: 24px;">
+                            <h4 style="font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                                <span>🌐</span>
+                                Network & Protocol Settings
+                            </h4>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <h5 style="font-weight: 500; margin-bottom: 12px;">Enabled Protocols</h5>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>Modbus TCP/IP (Port: 502)</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>OPC UA (Port: 4840)</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" checked>
+                                        <span>MQTT (Port: 1883)</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox">
+                                        <span>Ethernet/IP (Port: 44818)</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox">
+                                        <span>HART-IP (Port: 5094)</span>
+                                    </div>
+                                    <div class="checkbox-group">
+                                        <input type="checkbox">
+                                        <span>DNP3 (Port: 20000)</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 style="font-weight: 500; margin-bottom: 12px;">Connection Settings</h5>
+                                    <div class="form-group">
+                                        <label class="form-label">Connection Timeout (ms)</label>
+                                        <input type="number" class="form-input" value="5000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Retry Attempts</label>
+                                        <input type="number" class="form-input" value="3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Scan Rate (ms)</label>
+                                        <input type="number" class="form-input" value="1000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Network Interface</label>
+                                        <select class="form-select">
+                                            <option selected>Auto-detect</option>
+                                            <option>Ethernet 1 (192.168.1.x)</option>
+                                            <option>Ethernet 2 (10.0.0.x)</option>
+                                            <option>WiFi (192.168.0.x)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-cancel">
+                        <span>✖️</span>
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary">
+                        <span>💾</span>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.closest('.tab-btn').classList.add('active');
+        }
+
+        // Add some basic form validation and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Save button functionality
+            const saveButton = document.querySelector('.btn-primary[onclick*="Save"]');
+            if (saveButton) {
+                saveButton.addEventListener('click', function() {
+                    // Simulate save operation
+                    this.innerHTML = '<span>⏳</span> Saving...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<span>✅</span> Saved!';
+                        setTimeout(() => {
+                            this.innerHTML = '<span>💾</span> Save Changes';
+                            this.disabled = false;
+                        }, 2000);
+                    }, 1000);
+                });
+            }
+
+            // Form input change detection
+            const formInputs = document.querySelectorAll('.form-input, .form-select, input[type="checkbox"]');
+            formInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Mark form as modified
+                    this.style.borderColor = '#f59e0b';
+                    setTimeout(() => {
+                        this.style.borderColor = '';
+                    }, 1000);
+                });
+            });
+
+            // Add hover effects for table rows
+            const tableRows = document.querySelectorAll('.table tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = '#f9fafb';
+                });
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+
+            // Add click handlers for action buttons
+            const editButtons = document.querySelectorAll('button[style*="✏️"]');
+            editButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('Edit functionality would open a modal or navigate to edit page');
+                });
+            });
+
+            const deleteButtons = document.querySelectorAll('button[style*="🗑️"]');
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this item?')) {
+                        this.closest('tr').style.opacity = '0.5';
+                        alert('Item would be deleted');
+                    }
+                });
+            });
+        });
+    </script>
+    
+<script src="assets/js/navigation.js"></script>
+<!-- ====== ionicons ======= -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=favorite,home,search,settings" rel="stylesheet" />
+</body>
+</html>
