@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/mqtt-credentials')
       .then(res => res.json())
       .then(cfg => {
+        console.log(cfg)
         const client = mqtt.connect(cfg.brokerUrl, {
           clientId: cfg.clientId,
           username: cfg.username,
