@@ -325,12 +325,14 @@ app.get('/mqtt-credentials', authenticate, (req, res) => {
           category[row.type].push(row.topic);
         });
 
-        const host = process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost';
-        const port = process.env.PORT || 8888; // same as your Express+WS server
-        const protocol = process.env.RENDER_EXTERNAL_HOSTNAME ? 'wss' : 'ws';
+        const isProd = process.env.NODE_ENV === "production";
+
+        const brokerUrl = isProd
+          ? `wss://${req.get("host")}/mqtt`
+          : "ws://localhost:1884/mqtt";
 
         res.json({
-          brokerUrl: `${protocol}://${host}:${port}/mqtt`,
+          brokerUrl: brokerUrl,
           clientId: mqtt_client_id,
           username: username?.username || '',
           password: jwtToken,
@@ -2293,7 +2295,7 @@ async function uploadEventFilles(data, res, event, sender) {
 }
 
 // Start the server
-const PORT = process.env.PORT || 8888;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, async () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 
