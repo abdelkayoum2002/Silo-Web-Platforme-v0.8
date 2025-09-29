@@ -1,0 +1,34 @@
+app = "silo-web-platforme-v0-8"
+primary_region = "cdg"
+
+# 🚀 MQTT broker (Aedes over raw TCP)
+[[services]]
+  internal_port = 1883
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 1883
+    handlers = []   # raw TCP, no HTTP/TLS
+
+# 🌐 Web app (your existing frontend / backend)
+[[services]]
+  internal_port = 3000
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+[[mounts]]
+  destination = "/data"
+  source = "data"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "1gb"
+  memory_mb = 1024

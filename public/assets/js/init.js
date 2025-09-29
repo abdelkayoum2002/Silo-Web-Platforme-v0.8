@@ -103,7 +103,40 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error('MQTT Error:', err);
         });
     });
+    //==Socket.io==//
+    // DOM elements
+    const mainDiv = document.querySelector('.main');
+    //Initialize Socket.io 
+    const socket = io(); // connect to socket.io server
+    socket.on("forceDisconnect", (data ,ack) => {
+      if (ack) ack(); // acknowledge receipt
+      mainDiv.style.filter = 'blur(5px)';
 
+      setTimeout(() => {
+        alert("You have been kicked out");
+        mainDiv.innerHTML = '';
+      }, 100); 
+      setTimeout(() => {
+        window.location.replace("/"); // forces redirect to homepage
+      }, 2000);
+    });
+
+    socket.on("forceDelete", (data ,ack) => {
+      if (ack) ack(); // acknowledge receipt
+      mainDiv.style.filter = 'blur(5px)';
+
+      setTimeout(() => {
+        alert("You have been kicked out");
+        mainDiv.innerHTML = '';
+      }, 100); 
+      setTimeout(() => {
+        window.location.replace("/"); // forces redirect to homepage
+      }, 2000);
+    });
+    
+    socket.on("disconnect", (reason) => {
+      console.error("Disconnected:", reason);
+    });
     //==Profile Card==//
     //DOM elements
     const user = document.querySelector('.user');
@@ -169,8 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
-//==Socket.io==//
-const socket = io(); // connect to socket.io server
 
 function getTime(ts) {
   if (!ts) return null;
