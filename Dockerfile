@@ -39,6 +39,10 @@ RUN mkdir -p /data
 VOLUME /data
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
+ENV NODE_ENV=production
+
+# Expose ports
+EXPOSE 3000   # HTTP / WebSocket
+EXPOSE 1883   # Raw MQTT TCP
 ENV DATABASE_URL="file:///data/sqlite.db"
 CMD [ "npm", "run", "start" ]
