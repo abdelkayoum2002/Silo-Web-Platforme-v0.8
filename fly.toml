@@ -29,11 +29,11 @@ primary_region = 'sin'
 
 [[services]]
   protocol = "tcp"
-  internal_port = 1883
+  internal_port = 1885
   processes = ["app"]
 
   [[services.ports]]
-    port = 1883
+    port = 1885
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
