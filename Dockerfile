@@ -43,6 +43,6 @@ ENV NODE_ENV=production
 
 # Expose ports
 EXPOSE 3000   # HTTP / WebSocket
-EXPOSE 1883   # Raw MQTT TCP
+EXPOSE 1885   # Raw MQTT TCP
 ENV DATABASE_URL="file:///data/sqlite.db"
 CMD [ "npm", "run", "start" ]
