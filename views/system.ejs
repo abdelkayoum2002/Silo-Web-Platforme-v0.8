@@ -1213,7 +1213,7 @@ function scrollToSiloSection(siloID) {
             dateEl.title = formatDateTime(time)
           }
           if (flagEl) {
-            flagEl.src = `resource/countrys/${data.value}.png`;
+            flagEl.src = `resource/countrys/${data.value.toLowerCase()}.png`;
             flagEl.alt = `${data.value}`
             flagEl.classList.remove('beep-effect');
             void flagEl.offsetWidth;
@@ -1888,7 +1888,7 @@ function ADDSilo_to_view(id, silo) {
   const countrybar = `
     <tr>
       <td>
-        <label><strong>Country:</strong> <span id="${id}_Country"> ${country.value}</span><img id="${id}_Country_flag" src="resource/countrys/${country.value}.png" alt="${country.value}" height="30"></label>      
+        <label><strong>Country:</strong> <span id="${id}_Country"> ${country.value}</span><img id="${id}_Country_flag" src="resource/countrys/${country.value.toLowerCase()}.png" alt="${country.value.toLowerCase()}" height="30"></label>      
       </td>
       <td>
         <span class="last-update"><span id="${id}_Country_LastUpdate" title="${country.date}">${getTime(country.date)}</span></span>      
