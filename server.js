@@ -241,7 +241,7 @@ app.get('/dashboard',authenticate,checkAccess,sendJwtCookie, (req, res) => {
     }
   }
   console.log(welcome)
-  res.render('dashboard',{welcome});
+  res.render('dashboard',{welcome:null});
 });
 app.get('/system', (req, res) => {
   res.render('system');
