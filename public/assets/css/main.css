@@ -1,0 +1,296 @@
+/*MQTT Status*/
+  .mqtt_status {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+    background-color: #f44336;
+    color: white;
+  }
+/*Profile card*/
+  .user {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .user img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .tippy-tooltip.profile-card-theme {
+    padding: 0 !important;
+    color: inherit !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+
+  }
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    width: 220px;
+    border-radius: 12px;
+    border: 2px solid #22c55e;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* soft shadow */
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    font-family: sans-serif;
+    display: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .profile-image {
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px double #22c55e;
+  }
+
+  .profile-image img {
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-info {
+    text-align: center;
+  }
+
+  .profile-name {
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .profile-role {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .profile-email,
+  .profile-phone {
+    font-size: 13px;
+    color: #374151;
+  }
+
+  .profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .profile-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* spacing between icon and text */
+    padding: 12px 18px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+  }
+
+  .profile-actions .btn-view {
+    background: linear-gradient(135deg, #3b82f6, #2563eb); /* light → dark blue */
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  }
+
+  .profile-actions .btn-view:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+  }
+  .profile-actions .btn-logout {
+    background: linear-gradient(135deg, #ef4444, #dc2626); /* red gradient */
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+  }
+
+  .profile-actions .btn-logout:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+  }
+
+  .user-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-info {
+    text-align: center;
+  }
+
+  .user-name {
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .user-role {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .user-email,
+  .user-phone {
+    font-size: 13px;
+    color: #374151;
+  }
+
+  .user-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .user-actions button {
+    flex: 1;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .btn-view {
+    background: #2563eb;
+    color: white;
+  }
+
+  .btn-logout {
+    background: #ef4444;
+    color: white;
+  }
+
+/*Tippy init for tabel*/
+  .tippy-content table {
+    width: 100%;
+    font-size: 12px;
+    border-collapse: collapse;
+  }
+
+  .tippy-content th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+    padding: 6px 8px;
+    text-align: left;
+    border: 1px solid #d1d5db;
+  }
+
+  .tippy-content td {
+    padding: 4px 8px;
+    border: 1px solid #d1d5db;
+  }
+
+  .tippy-content tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
+
+/*Notification Alarm*/
+  .notificationIcon{
+    width: 40px; 
+  }
+  .tippy-tooltip.notificationList-theme{
+    background: rgba(255, 255, 255, 0.98);
+    color: #374151;
+    border: 3px solid #22c55e;
+    box-shadow: 0 12px 35px rgba(34, 197, 94, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  #notificationList .table-container{
+    max-height: 233px;
+    overflow-y: auto;
+    display: block;   /* important to enable scrolling */
+    scrollbar-width: thin;       /* makes it thinner */
+    scrollbar-color: #888 #f0f0f0; /* thumb and track */
+  }
+  #notificationList .table-container::-webkit-scrollbar {
+    width: 2px;
+    height: 6px;
+  }
+
+  #notificationList .table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+
+  #notificationList .table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  #notificationList .table-container::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  #notificationList .table-container::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  #notificationList tr.INFO {
+    background-color: blue;
+    color: white;
+  }
+  #notificationList tr.WARNING {
+    background-color: #ffcc00; /* yellow */
+    color: white;
+  }
+  #notificationList tr.DANGER {
+    background-color: #ff0000;   /* red */
+    color: white;
+  }
+  #notificationList tr td.INFO {
+    background-color: blue;
+    color: white;
+  }
+  #notificationList tr td.WARNING{
+    background-color: #ffcc00;
+    color: #000000;
+    animation: warningBlink 1s infinite; /* blinking animation */
+  }
+  #notificationList tr td.DANGER{
+    background-color: #ff0000;   /* red */
+    color: #ffffff;              /* white text */
+    animation: dangerBlink 0.3s infinite;
+  }
+  @keyframes dangerBlink {
+      0%, 100% {
+          background-color: #ff0000;   /* red */
+          color: #ffffff;              /* white text */
+      }
+      50% {
+          background-color: #ffffff;   /* white */
+          color: #ff0000;              /* red text */
+      }
+  }
+  @keyframes warningBlink {
+      0%, 100% {
+          background-color: #ffcc00;
+          color: #000000;
+      }
+      50% {
+          background-color: #ffffff;
+          color: #ffcc00;
+      }
+  }
